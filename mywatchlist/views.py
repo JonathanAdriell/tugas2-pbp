@@ -7,10 +7,27 @@ def show_empty(request):
     return render(request, "empty.html")
 
 def show_watchlist(request): # show watchlist in HTML
+
+    have_watched = 0
+    havent_watched = 0
+    data = MyWatchList.objects.all()
+
+    for object in data:
+        if (object.watched): # menghitung jumlah film yang telah ditonton
+            have_watched += 1
+        else:
+            havent_watched += 1
+
+    if (have_watched >= havent_watched):
+        output = "Selamat, kamu sudah banyak menonton!"
+    else:
+        output = "Wah, kamu masih sedikit menonton!"   
+
     context = {
         'name': 'Jonathan Adriel',
         'student_id': '2106750692',
-        'watchlists': MyWatchList.objects.all()
+        'watchlists': data,
+        'output_counter': output
     }
     return render(request, "mywatchlist.html", context)
 
