@@ -48,7 +48,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('example_app.urls')), # jadi klo urlnya gada /..., dia bakal kelempar ke example_app
+    path('', include('example_app.urls')),
     path('katalog/', include('katalog.urls')),
     path('mywatchlist/', include('mywatchlist.urls')),
 ]
@@ -63,7 +63,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class MyWatchList(models.Model):
     watched = models.BooleanField()
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=255)
     rating = models.IntegerField(validators=[
         MinValueValidator(1),
         MaxValueValidator(5)
@@ -99,6 +99,9 @@ Dalam mywatchlist/templates/empty.html
 {% block content %}
 
 <h1>Tugas 3 PBP/PBD</h1>
+<a href = "html"> <button>show in html</button></a>
+<a href = "xml"> <button>show in xml</button></a>
+<a href = "json"> <button>show in json</button></a>
 
 {% endblock content %}
 ```
@@ -122,6 +125,8 @@ Dalam mywatchlist/templates/mywatchlist.html
 
 <h5>Student ID:</h5>
 <p>{{student_id}}</p>
+
+<p>{{output_counter}}</p>
 
 <table>
     <tr>
@@ -159,15 +164,32 @@ from django.core import serializers
 def show_empty(request):
     return render(request, "empty.html")
 
-def show_watchlist(request):
+def show_watchlist(request): # show watchlist in HTML
+
+    have_watched = 0
+    havent_watched = 0
+    data = MyWatchList.objects.all()
+
+    for object in data:
+        if (object.watched): # menghitung jumlah film yang telah ditonton
+            have_watched += 1
+        else:
+            havent_watched += 1
+
+    if (have_watched >= havent_watched): # menentukan output berdasarkan jumlah film yang telah ditonton
+        output = "Selamat, kamu sudah banyak menonton!"
+    else:
+        output = "Wah, kamu masih sedikit menonton!"   
+
     context = {
         'name': 'Jonathan Adriel',
         'student_id': '2106750692',
-        'watchlists': MyWatchList.objects.all()
+        'watchlists': data,
+        'output_counter': output
     }
     return render(request, "mywatchlist.html", context)
 
-def show_xml(request):
+def show_xml(request): # show watchlist in XML
     data = MyWatchList.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
@@ -198,9 +220,9 @@ from mywatchlist.views import show_xml_by_id
 
 app_name = 'mywatchlist'
 
-urlpatterns = [
+urlpatterns = [ # memanggil fungsi yang ada di views
     path('', show_empty, name='show_empty'),
-    path('html/', show_watchlist, name='show_wishlist'),
+    path('html/', show_watchlist, name='show_watchlist'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
     path('json/<int:id>', show_json_by_id, name='show_json_by_id'),
@@ -211,3 +233,14 @@ urlpatterns = [
 10. Untuk melakukan deployment ke Heroku, pastikan seluruh perubahan pada repository untuk Tugas 3 sudah di-push. Dalam hal ini, repository Tugas 3 saya bernama tugas2-pbp. Kemudian, pergi ke account settings pada Heroku dan salin API key. Lalu, pergi ke   `repository Tugas 3 > settings > secrets > actions` untuk membuat dua buah repository secret.
 
 Untuk repository secret yang pertama, namanya adalah `HEROKU_API_KEY` dengan secret nya adalah `API key yang telah diperoleh sebelumnya dari account settings pada Heroku`. Untuk repository secret yang kedua, namanya adalah `HEROKU_APP_NAME` dengan secret nya adalah `nama aplikasi Tugas 3 di Heroku`. Kemudian, pergi ke actions pada repository Tugas 3 dan klik `Re-run all jobs`. Deployment telah selesai.
+
+## Postman
+
+1. JSON
+<img src="" alt="" height="500" width="700" />
+
+2. XML
+<img src="" alt="" height="500" width="700" />
+
+3. HTML
+<img src="" alt="" height="500" width="700" />

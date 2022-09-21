@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [ # meneruskan requestnya ke url tertentu tergantung dari url yang diberikan
+urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('example_app.urls')), # jadi klo urlnya gada /..., dia bakal kelempar ke example_app
+    path('', include('example_app.urls')),
     path('katalog/', include('katalog.urls')),
     path('mywatchlist/', include('mywatchlist.urls')),
 ]

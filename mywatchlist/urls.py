@@ -8,7 +8,7 @@ from mywatchlist.views import show_xml_by_id
 
 app_name = 'mywatchlist'
 
-urlpatterns = [ # manggil fungsi yang ada di views
+urlpatterns = [ # memanggil fungsi yang ada di views
     path('', show_empty, name='show_empty'),
     path('html/', show_watchlist, name='show_watchlist'),
     path('xml/', show_xml, name='show_xml'),

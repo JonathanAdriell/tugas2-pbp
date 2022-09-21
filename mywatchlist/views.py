@@ -18,7 +18,7 @@ def show_watchlist(request): # show watchlist in HTML
         else:
             havent_watched += 1
 
-    if (have_watched >= havent_watched):
+    if (have_watched >= havent_watched): # menentukan output berdasarkan jumlah film yang telah ditonton
         output = "Selamat, kamu sudah banyak menonton!"
     else:
         output = "Wah, kamu masih sedikit menonton!"   
