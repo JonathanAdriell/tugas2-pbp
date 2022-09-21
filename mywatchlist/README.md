@@ -228,13 +228,12 @@ Untuk repository secret yang pertama, namanya adalah `HEROKU_API_KEY` dengan sec
 ## Postman
 
 1. JSON
-<img src="https://user-images.githubusercontent.com/112321270/191532958-3ad2477c-a3cd-432f-b81b-acb40bbd85aa.png" alt="" height="450" width="880" />
+<img src="https://user-images.githubusercontent.com/112321270/191543420-864675ec-fc72-40de-926e-23fccf731d78.png" alt="" height="450" width="880" />
 <br>
 
 2. XML
-<img src="https://user-images.githubusercontent.com/112321270/191532909-9939a086-ccd7-4b4a-bbf3-817a6a85089a.png" alt="" height="450" width="880" />
+<img src="https://user-images.githubusercontent.com/112321270/191543354-91c521a6-d52f-4f17-8e7f-97a37d01169c.png" alt="" height="450" width="880" />
 <br>
 
 3. HTML
-<img src="https://user-images.githubusercontent.com/112321270/191532852-6c99c6f8-d056-4f72-9d00-8cbb81d5fd66.png" alt="" height="450" width="880" />
-<br>
+<img src="https://user-images.githubusercontent.com/112321270/191543310-d975dccd-03ed-4a23-a62e-7b7a09b32904.png" alt="" height="450" width="880" />
