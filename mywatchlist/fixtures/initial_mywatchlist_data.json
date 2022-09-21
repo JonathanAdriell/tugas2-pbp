@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title": "Avengers: End Game",
+            "rating": 5,
+            "release_date": "2019-04-22",
+            "review": "This movie was very amazing. It brings a lot of flashbacks."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 2,
+        "fields": {
+            "watched": true,
+            "title": "Harry Potter and the Goblet of Fire",
+            "rating": 4,
+            "release_date": "2005-11-06",
+            "review": "This movie was amazing."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 3,
+        "fields": {
+            "watched": false,
+            "title": "Top Gun: Maverick",
+            "rating": 5,
+            "release_date": "2000-12-05",
+            "review": "This movie was very awesome. Can't believe Tom Cruise really learned how to flight in order to act in this film."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 4,
+        "fields": {
+            "watched": false,
+            "title": "Jurassic World Dominion",
+            "rating": 3,
+            "release_date": "2022-05-23",
+            "review": "This movie was quite predictable and didn't show anything new."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 5,
+        "fields": {
+            "watched": true,
+            "title": "Encanto",
+            "rating": 4,
+            "release_date": "2021-11-24",
+            "review": "This movie had a very nice message. Very heartwarming."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 6,
+        "fields": {
+            "watched": true,
+            "title": "Spider-Man: No Way Home",
+            "rating": 2,
+            "release_date": "2021-12-17",
+            "review": "This movie was disappointing. It doesn't show anything new apart from three Spiderman from different universe unite."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 7,
+        "fields": {
+            "watched": false,
+            "title": "Thor: Love and Thunder",
+            "rating": 3,
+            "release_date": "2022-06-23",
+            "review": "This movie was quite nice, but too much comedy."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 8,
+        "fields": {
+            "watched": true,
+            "title": "Minions: The Rise of Gru",
+            "rating": 4,
+            "release_date": "2022-07-01",
+            "review": "This film was very funny."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 9,
+        "fields": {
+            "watched": true,
+            "title": "Doctor Strange in the Multiverse of Madness",
+            "rating": 4,
+            "release_date":  "2022-05-06",
+            "review": "This movie was awesome."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 10,
+        "fields": {
+            "watched": false,
+            "title": "Fantastic Beasts and Where to Find Them",
+            "rating": 4,
+            "release_date": "2016-11-18",
+            "review": "This movie was very nice."
+        }
+    }
+]
