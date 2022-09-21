@@ -221,8 +221,47 @@ Dalam mengembangkan suatu _platform_, ada saatnya dimana kita perlu mengirimkan 
       path('xml/<int:id>', show_xml_by_id, name='show_xml_by_id'),
    ]
    ```
+   
+10. Kemudian, buatlah suatu _test unit_ pada `mywatchlist/tests.py` untuk menguji apakah URL JSON, XML, dan HTML dapat mengembalikan respon `HTTP 200 OK`.
+   
+    Dalam mywatchlist/tests.py
+    ```
+    from django.test import TestCase
+    from django.test import Client
+    from django.urls import reverse
 
-10. Untuk melakukan deployment ke Heroku, pastikan seluruh perubahan pada repository untuk Tugas 3 sudah di-push. Dalam hal ini, repository Tugas 3 saya bernama tugas2-pbp. Kemudian, pergi ke account settings pada Heroku dan salin API key. Lalu, pergi ke   `repository Tugas 3 > settings > secrets > actions` untuk membuat dua buah repository secret.<br><br>
+    class MyWatchListTesting(TestCase):
+       def setUp(self):
+          self.client = Client()
+
+       def test_url_html(self): # test show_mywatchlist
+          response = self.client.get(reverse("mywatchlist:show_watchlist"))
+          self.assertEqual(response.status_code, 200)
+    
+       def test_url_xml(self):
+          response = self.client.get(reverse("mywatchlist:show_xml"))
+          self.assertEqual(response.status_code, 200)
+
+       def test_url_json(self):
+          response = self.client.get(reverse("mywatchlist:show_json"))
+          self.assertEqual(response.status_code, 200)
+    ```
+   
+    Jalankan `python manage.py collectstatic` untuk mengumpulkan berkas _static_. Pengujian terhadap ketiga URL tersebut dapat dilakukan dengan menjalankan seperti berikut:
+   
+    ```
+    python manage.py test
+    ```
+    
+11. Tambahkan juga `python manage.py loaddata initial_mywatchlist_data.json` pada `Procfile` untuk menampilkan data pada aplikasi Heroku.
+
+    Dalam Procfile
+    ```
+    release: sh -c 'python manage.py migrate && python manage.py loaddata initial_catalog_data.json && python manage.py loaddata initial_mywatchlist_data.json' 
+    web: gunicorn project_django.wsgi --log-file -
+    ```
+   
+12. Untuk melakukan deployment ke Heroku, pastikan seluruh perubahan pada repository untuk Tugas 3 sudah di-push. Dalam hal ini, repository Tugas 3 saya bernama tugas2-pbp. Kemudian, pergi ke account settings pada Heroku dan salin API key. Lalu, pergi ke   `repository Tugas 3 > settings > secrets > actions` untuk membuat dua buah repository secret.<br><br>
 Untuk repository secret yang pertama, namanya adalah `HEROKU_API_KEY` dengan secret nya adalah `API key yang telah diperoleh sebelumnya dari account settings pada Heroku`. Untuk repository secret yang kedua, namanya adalah `HEROKU_APP_NAME` dengan secret nya adalah `nama aplikasi Tugas 3 di Heroku`. Kemudian, pergi ke actions pada repository Tugas 3 dan klik `Re-run all jobs`. Deployment telah selesai.
 
 ## Postman
