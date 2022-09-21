@@ -7,17 +7,6 @@ JSON atau JavaScript Object Notation merupakan suatu format untuk data yang sint
 
 XML atau eXtensible Markup Language merupakan suatu bahasa markup yang lebih berfokus pada penyimpanan dan pengiriman data. Biasanya, XML banyak digunakan untuk menyimpan dan mengirim data pada aplikasi, baik _web_ maupun _mobile_. XML didesain ke dalam bentuk yang _self_descriptive_. Jika dibandingkan dengan JSON, XML memang lebih kompleks dan lambat. Akan tetapi, kompleksitas tersebut membuat XML merupakan suatu bahasa markup yang sangat bagus untuk aplikasi yang melibatkan banyak data. Tags pada XML bersifat _extensible_. Struktur berkas XML berbentuk seperti pohon dan sekilas terlihat seperti HTML. Namun, XML tidak meliki _pre-defined_ tags, bersifat _case-sensitive_, dan _strict_ dalam penggunaan _closing tag_, yang berkebalikan dari HTML. Berkebalikan dengan JSON, XML mendukung penggunaan _comments_.
 
-```
-<django-objects version="1.0">
-<object model="mywatchlist.mywatchlist" pk="1">
-<field name="watched" type="BooleanField">True</field>
-<field name="title" type="CharField">Avengers: End Game</field>
-<field name="rating" type="IntegerField">4</field>
-<field name="release_date" type="DateField">2019-04-22</field>
-<field name="review" type="TextField">This movie is very outstanding. It brings a lot of flashbacks, full of unpredictable moment, and a rollercoaster of feelings.</field>
-</object>
-```
-
 HTML atau HyperText Markup Language merupakan suatu bahasa markup yang lebih berfokus pada penampilan data. Pada umumnya, HTML digunakan untuk membuat halaman _website_. Penulisan dengan HTML bersifat _case-insensitive_ dan tidak _strict_ dalam penggunaan _closing tag_. HTML mendukung penggunaan _comments_ juga.
 
 
