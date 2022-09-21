@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class MyWatchList(models.Model): # model di Django kayak translator, misal dia translate ke SQL buat dapetin data yang dinginkan dari database
     watched = models.BooleanField()
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=255)
     rating = models.IntegerField(validators=[
         MinValueValidator(1),
         MaxValueValidator(5)
