@@ -144,7 +144,7 @@ Dalam mengembangkan suatu _platform_, ada saatnya dimana kita perlu mengirimkan 
    {% endblock content %}
    ```
 
-8. Lalu, buatlah fungsi dengan parameter `request` pada `mywatchlist/views.py` untuk menampilkan data dalam format HTML, XML, dan JSON.
+8. Lalu, buatlah fungsi dengan parameter `request` pada `mywatchlist/views.py` untuk menampilkan data dalam format HTML, XML, atau JSON.
 
    Dalam mywatchlist/views.py
    ```
