@@ -83,7 +83,7 @@ Dalam mengembangkan suatu _platform_, ada saatnya dimana kita perlu mengirimkan 
 
    Lakukan hal tersebut setiap kali ada perubahan pada data yang ingin digunakan.
 
-7. Kemudian, buatlah sebuah folder bernama `templates` di dalam folder `mywatchlist` dan buat juga dua berkas bernama `empty.html` dan `mywatchlist.html` pada `mywatchlist/templates`. `empty.html` merupakan suatu template HTML yang hanya berisi kalimat "Tugas 3 PBP/PBD" ketika ditampilkan, sedangkan `mywatchlist.html` merupakan suatu template yang berisi kalimat dan data pada `initial_mywatchlist_data.json` yang disajikan dalam bentuk tabel ketika ditampilkan.
+7. Kemudian, buatlah sebuah folder bernama `templates` di dalam folder `mywatchlist` dan buat juga dua berkas bernama `empty.html` dan `mywatchlist.html` pada `mywatchlist/templates`. `empty.html` merupakan suatu template HTML yang berisi kalimat "Tugas 3 PBP/PBD" dan tiga _button_ yang menuju ke halaman HTML, XML, atau JSON ketika ditampilkan, sedangkan `mywatchlist.html` merupakan suatu template yang berisi kalimat dan data pada `initial_mywatchlist_data.json` yang disajikan dalam bentuk tabel ketika ditampilkan.
 
    Dalam mywatchlist/templates/empty.html
    ```
