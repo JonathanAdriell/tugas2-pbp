@@ -1,0 +1,40 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+
+    <h1>Create a new task</h1>
+
+    <style>
+        th, td {
+            padding: 10px;
+        }
+
+        table {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+    </style>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" name="title" placeholder="Enter your task title here"></td>
+            </tr>
+
+            <tr>
+                <td>Description:</td>
+                <td><input type="text" name="description" placeholder="Enter your task description here"></td>
+            </tr>
+
+            <tr>
+                <td></td>            
+                <td><input style="margin-top: 20px;" type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock content %}

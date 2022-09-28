@@ -1,0 +1,28 @@
+## Tugas 4
+Hasil Tugas 4 saya dapat dilihat [di sini](https://jonathan-tugas2.herokuapp.com/todolist/).
+
+
+## Apa kegunaan {% csrf_token %} pada elemen `<form>`? Apa yang terjadi apabila tidak ada potongan kode tersebut pada elemen `<form>`?
+
+
+Salah satu serangan yang mungkin dilakukan oleh pihak eksternal adalah _Cross-Site Request Forgery_ (CSRF). Serangan tersebut berlangsung dengan melakukan aksi yang seolah-olah dilakukan oleh user, tetapi kenyataannya tidak sehingga aksi yang tidak diinginkan dapat terjadi. Untuk mencegah hal tersebut, kita dapat menggunakan CSRF token. CSRF token untuk setiap user saling berbeda dan dibuat ulang dalam interval waktu tertentu. Dengan CSRF token, _server-side_ dapat melakukan verifikasi terhadap _request_ yang diterima, terkait apakah _request_ tersebut mengandung token yang sesuai dengan token user. Jika sesuai, maka _server-side_ akan melanjutkan _request_ tersebut untuk diproses. Jika tidak sesuai, berarti _request_ tersebut berasal dari pihak eksternal yang seolah-olah mengaku sebagai user sehingga _server-side_ akan menolak _request_ tersebut. Jika tidak ada CSRF token pada elemen `<form>`, maka yang terjadi adalah error 403.
+
+## Apakah kita dapat membuat elemen `<form>` secara manual (tanpa menggunakan generator seperti {{ form.as_table }})? Jelaskan secara gambaran besar bagaimana cara membuat `<form>` secara manual.
+
+Ya, kita dapat membuat elemen `<form>` secara manual dengan menggunakan tag `<form method="POST">`, `<table>`, `<tr>`, `<td>`, dan `<input>`. Tag `<form method="POST">` digunakan untuk mendefinisikan bahwa methodnya merupakan POST. Tag `<table>` digunakan untuk memungkinkan data ditempatkan dalam baris dan kolom. Tag `<tr>` digunakan untuk membuat _row_ baru. Tag `<td>` digunakan untuk mendefinisikan _cell_ dalam _table_. Tag `<input>` untuk menerima data dari user. Tambahan dalam tag `<input>` disesuaikan dengan tujuan yang ingin dilakukan. Misalkan ingin membuat suatu kotak input untuk _password_, maka `<input type="password" name="password" placeholder="Password" class="form-control">`. Placeholder bersifat opsional untuk menampilkan teks pada kotak input yang masih kosong. Untuk membuat _button_ yang dapat _submit_ seluruh data pada kotak input, maka `<input type="submit" class="btn login_btn" value="Login">`. Jangan lupa menambahkan {% csrf_token %} setelah `<form method="POST">` untuk mencegah terjadinya serangan CSRF.
+ 
+## Jelaskan proses alur data dari submisi yang dilakukan oleh pengguna melalui HTML form, penyimpanan data pada database, hingga munculnya data yang telah disimpan pada template HTML.
+
+Setelah user memasukkan data dan melakukan submisi form, POST _request_ akan dikirimkan ke fungsi yang terdapat di `views.py`. Jika form yang disubmisi merupakan form login, maka validasi dapat dilakukan dengan `authenticate(request, username=username, password=password)`. Jika _valid_, maka akan login dan diarahkan ke fungsi `show_todolist` pada `views.py`. Jika form yang disubmisi merupakan form membuat task baru, maka semua data yang dimasukkan dapat diambil dengan `request.POST.get(nama_input)` dan akan dibentuk objek baru di database dengan `Task.objects.create(user=request.user, date=datetime.date.today(), title=title, description = description)`. Kemudian akan diarahkan ke fungsi `show_todolist` pada `views.py`. Dalam fungsi `show_todolist`, context akan dipetakan ke `todolist.html` yang kemudian akan dirender dan dikembalikan kepada user sebagai _response_. Dalam context, terdapat data user yang diperoleh dari _database_ dengan cara melakukan `Task.objects.filter(user=request.user)`. Untuk menampilkan data user tersebut, digunakan for loop untuk mendapatkan setiap objek dari data user tersebut, yang kemudian attribute dari objek tersebut dapat ditampilkan dengan `{{objek.attribute}}` pada `todolist.html`.
+
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+1. Pertama, buat aplikasi todolist dengan menjalankan command `python manage.py startapp todolist`.
+2. Kemudian, aplikasi `todolist` tersebut didaftarkan ke dalam projek Django dengan menambahkan `todolist` ke dalam variabel `INSTALLED_APPS` pada `project_django/settings.py`. Tambahkan juga `path('todolist/', include('todolist.urls'))` ke dalam `urls.py` pada `project_django/urls.py`.
+3. Lalu, buat suatu model bernama `Task` dengan atribut `user`, `date`, `title`, `description`, dan `is_finished` pada `todolist/models.py`
+4. Lakukan persiapan serta penerapan migrasi skema model ke dalam database Django lokal dengan menjalankan `python manage.py makemigrations` dan `python manage.py migrate` setiap kali ada perubahan pada model yang ingin digunakan.
+5. Kemudian, buat sebuah folder bernama `templates` dengan file di dalamnya adalah `create.html`, `login.html`, `register.html`, dan `todolist.html`. `create.html` merupakan template untuk membuat task baru, `login.html` merupakan template untuk melakukan login. `register.html` merupakan template untuk melakukan registrasi akun. `todolist.html` merupakan template untuk menampilkan todolist.
+6. Lalu, buat fungsi `show_todolist` untuk mengembalikan response berupa tampilan , `register`, `login_user`, `create_task`, `mark_done`, `delete_task`, dan `logout` di `todolist/views.py`.
+7. Kemudian, buat suatu berkas bernama `urls.py` di dalam folder `todolist` dan lakukan _routing_ terhadap berbagai fungsi yang ada pada `todolist/views.py`
+8. Deploy ke Heroku
+9. Lalu buat `dua akun pengguna` dan `tiga dummy data` menggunakan model `Task`.
