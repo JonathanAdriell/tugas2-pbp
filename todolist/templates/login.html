@@ -1,56 +1,83 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block meta %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+  
+  <script>
+      tailwind.config = {
+          theme: {
+              extend: {
+                  fontFamily: {
+                      sans: ['Inter', 'sans-serif'],
+                  },
+              }
+          }
+      }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+    .login-title {
+        font-family: "Rubik";
+    }
+    .form-login-background {
+        margin-top: 150px;
+    }
+  </style>
+
 <title>Login</title>
-{% endblock meta %}
 
-{% block content %}
+</head>
 
-<div class = "login" style="display: flex; flex-direction: column; align-items: center;">
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
 
-    <h1>Login</h1>
 
-    <style>
-        th, td {
-            padding: 10px;
-        }
+    <div class="flex items-center justify-center bg-gray-100 form-login-background">
+          
+        <form method="POST" action="" class="grid gap-4 row-4 grid-cols-1 p-7" >
+            {% csrf_token %}
+            <label class = "sm: text-xl md:text-2xl lg:text-3xl text-gray-1000 login-title">To Do List</label>
+            <label class = "text-gray-700">Username</label>
+            
+            <input 
+                type="text" 
+                name="username" 
+                placeholder="Username"
+                class="w.full py-2 bg-gray-50 text-gray-500 px-1 outline-none mb-4">
 
-        table {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
+            <label class = "text-gray-700">Password: </label>
+            <input 
+                type="password" 
+                name="password" 
+                placeholder="Password"
+                class="w.full py-2 bg-gray-50 text-gray-500 px-1 outline-none mb-4">
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
+            <button type= "submit" class="bg-blue-500 w-full text-gray-100 py-2 rounded hover:bg-blue-600 transition-colors">Log in</button>
 
-            <tr>
-                <td></td>
-                <td><input type="submit" class="btn login_btn" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
                 <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Belum mempunyai akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
+                {% endfor %}
+            </ul>
+            {% endif %}
 
-</div>
-
-{% endblock content %}
+            Belum mempunyai akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
+        </form>
+    </div>
+    </div>
+</body>
+</html>
