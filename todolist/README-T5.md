@@ -121,9 +121,11 @@ Nanti elemen HTML dengan attribute class bernama `card` akan terseleksi, dan nan
 
 - `CSS Universal Selector`melakukan seleksi terhadap seluruh elemen HTML pada suatu halaman. Untuk melakukan seleksi, digunakan tanda `*` seperti berikut:
 
+```
 * {
     background-color: grey;
 }
+```
 Nanti seluruh elemen HTML pada suatu halaman akan berwarna grey
 
 - `CSS Grouping Selector` melakukan seleksi terhadap seluruh elemen HTML pada suatu halaman dengan definisi style yang sama.
