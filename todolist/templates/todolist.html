@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
-    
+
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -34,21 +36,21 @@
         }
 
         .card {
-            background-color:lightgrey;
+            background-color: lightgrey;
             margin: 20px;
             width: 200px;
             word-break: break-word;
-            
+
         }
+
         .highlight {
             background-color: grey;
             height: 10px;
             width: 100%;
-            
         }
-        
+
         .data {
-            padding:10px;
+            padding: 10px;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -56,7 +58,7 @@
         }
 
         .button-form {
-            margin-top: auto; 
+            margin-top: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,73 +87,153 @@
             background-color: blue;
             color: white;
         }
-        
+
         .grey {
             background-color: darkgrey;
             color: white;
         }
-        
     </style>
 </head>
 
 <body>
-    <div style="display: flex; flex-direction: column; align-items: center; padding: 100px ">
-        
-        <h1 style="padding-bottom: 50px; font-size: 25px;">Welcome, {{username}}!</h1>
 
-        <div class = "card-container">
-            {% for object in todolist %}
+    <script>
+
+        $(document).ready(() => {
+
+            const card = task => `
             <div class = "card">
+
                 <div class = "highlight">
-                    
                 </div>
 
                 <div class = "data">
-
-                    <h5 class = "title" style = "margin-top: 5px; height:80px">{{object.title}}</h5>
+                    <h5 class = "title" style = "margin-top: 5px; height:80px">${task.fields.title}</h5>
                 
                     <div style = "margin-top: 15px; margin-bottom: 15px; background-color: whitesmoke; height: 100%; width: 100%; padding:5px">
-                        
-                        <h5>{{object.description}}</h5>
+                        <h5>${task.fields.description}</h5>
                     </div>
 
                     <div>
-                        
-                        <h5 class = "date" style = "margin-top: 5px;">{{object.date}}</h5>
+                        <h5 class = "date" style = "margin-top: 5px;">${task.fields.date}</h5>
                     </div>
 
                     <div class = "button-form">
+
                         <div>
-                        {% if object.is_finished %}
-                            Finished
-                        {% else %}
-                            Not Finished
-                        {% endif %}
-            
-                        <input type="checkbox" {% if object.is_finished %} checked {% endif %} onclick="location.href=`{% url 'todolist:mark_done' object.id %}`">
+                        ${task.fields.is_finished ? "Finished" : "Not Finished"}
+                        <input type="checkbox" ${task.fields.is_finished && "checked"} onclick="location.href='mark-done/${task.pk}'">
                         </div>
 
                         <button class = "button red">
-                            <a href="{% url 'todolist:delete_task' object.id %}">Delete</a>
+                            <a href="delete-task/${task.pk}">Delete</a>
                         </button>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            `;
+
+            const updateTask = () => {
+
+                $.get("{% url 'todolist:show_json' %}", data => {
+
+                    $.each(data, function (index, value) {
+                        $("#todolist").append(card(value));
+                    });
+                });
+            };
+
+            updateTask();
+
+            const openModal = e => {
+                $("#add-task-modal").removeClass("hidden"); // ketika modal dibuka, kelas hidden akan dihilangkan sehingga dapat menampilkan modal
+            };
+
+            const closeModal = e => {
+                $("#add-task-modal").addClass("hidden"); // ketika modal ditutup, class hidden akan ditambahkan sehingga model tidak tertampilkan
+            };
+
+            $("#add-task-button").click(openModal);
+            $("#close-icon").click(closeModal);
+
+            $("#add-task-form").submit(function (e) {
+                e.preventDefault(); // agar tidak refresh ketika submit
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'todolist:add' %}",
+                    data: {
+                        title: $("#title").val(),
+                        description: $("#description").val(), // mendapatkan input value dari user berdasarkan id
+                    },
+                    success: function (response) {
+                        $("#add-task-form").trigger("reset"); // untuk meng-clear formnya
+                        closeModal();
+                        $("#todolist").append(card(response));
+                    }
+                })
+            })
+        });
+
+    </script>
+
+    <div id="add-task-modal"
+        class="w-full fixed flex justify-center w-full z-10 min-h-screen items-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg">
+            <div class="flex justify-between px-5 py-2 bg-blue-200 rounded-t-lg">
+                <h1>Create a new task</h1>
+                <div class="cursor-pointer" id="close-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
             </div>
+
+            <div class="m-5">
+                <form method="POST" action="" id="add-task-form">
+                    {% csrf_token %}
+                    <div class="flex flex-col gap-5">
+                        <div class="flex gap-5">
+                            Title:
+                            <input type="text" name="title" placeholder="Title" id="title"
+                                class="border-2 border-blue-500 rounded">
+                        </div>
+
+                        <div class="flex gap-5">
+                            Description:
+                            <input type="text" name="description" placeholder="Description" id="description"
+                                class="border-2 border-blue-500 rounded">
+                        </div>
+
+                        <div class="flex gap-5 mx-auto">
+                            <input class="p-2 bg-blue-200 rounded cursor-pointer" type="submit" value="Submit"> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; padding: 100px ">
+
+        <h1 style="padding-bottom: 50px; font-size: 25px;">Welcome, {{username}}!</h1>
+
+        <div class="card-container" id="todolist">
+
+        </div>
 
 
         <div style="display:flex; flex-direction:row; margin-top: 20px; margin-top: 50px;">
-            <button style="margin-right: 70px;" class = "button yellow">
-                <a href="{% url 'todolist:create_task' %}">Add a new task</a>
+            <button style="margin-right: 70px;" class="button yellow" id="add-task-button">
+                Add a new task
             </button>
 
-            <button class = "button blue">
+            <button class="button blue">
                 <a href="{% url 'todolist:logout' %}">Logout</a>
             </button>
         </div>
     </div>
-
 
 </body>
 
